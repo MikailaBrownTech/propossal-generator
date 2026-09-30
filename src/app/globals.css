@@ -1,0 +1,201 @@
+/*
+ * ClearPath brand theme (from the live marketing site). Dark only, no light-mode toggle. Shared
+ * visual identity with the Lead Console app (clearpath-lead-console) -- see the top of this file's
+ * companion, apps/web/src/styles/tokens.css, in that repo. If either app's brand values change,
+ * update both until a shared package exists.
+ *
+ * Contrast, checked against WCAG AA (4.5:1 body text, 3:1 for non-text UI) on every background it
+ * actually sits on -- this is the same reasoning as the Lead Console's token file, reproduced here
+ * because the colors, fonts, and base sizes are identical, so the contrast math is identical too:
+ *  - --muted #8895B3 needed no change: 6.6:1 on --black, 5.9:1 on --card-bg, 6.1:1 on --navy. Used
+ *    exactly as given, for body and secondary text.
+ *  - White on the source --electric (#0066FF) measures 4.39:1 (fails); white on --electric-bright
+ *    (the source's own hover color, #2D87FF) measures 3.17:1 (fails worse). --accent-solid (#0060F0,
+ *    a hair darker than --electric) measures 4.86:1 and is what .btn.primary's background uses
+ *    instead; hover keeps that same background (no brighten) and relies on lift + glow only, since any
+ *    brighten toward the brand blues drops back under 4.5:1 with white text. --electric-bright itself
+ *    is still used exactly as given for TEXT/border/icon color (links, focus rings, info tags): 5.6:1
+ *    on black, 5.1:1 on card-bg, well clear of AA there.
+ *  - A brand-brightness red (e.g. #E5484D) only reaches ~3.5:1 with white text. --danger-solid
+ *    (#C0392B, 4.94:1) is used for buttons/status backgrounds carrying white text instead. --danger
+ *    itself (for text, icons, borders -- never a solid button fill) is a brighter red, #F07167
+ *    (6.1-6.8:1), since #C0392B as TEXT only measures 3.3-3.6:1 and would fail everywhere it's used.
+ *  - --lime is reserved for exactly one meaning in this app (Approved status: see .badge.approved)
+ *    and is never used as a button or a general accent, per the brand direction.
+ */
+@import "tailwindcss";
+@import "./components.css";
+
+:root {
+  color-scheme: dark;
+
+  /* ---- Exact brand values ---- */
+  --black: #080b14;
+  --navy: #0d1525;
+  --electric: #0066ff;
+  --electric-bright: #2d87ff;
+  --cyan: #00d4ff;
+  --lime: #c8ff00;
+  --white: #f0f4ff;
+  --off-white: #e2e8f8;
+  --muted: #8895b3;
+  --card-bg: #111827;
+  --card-border: rgba(0, 102, 255, 0.2);
+  --glass: rgba(255, 255, 255, 0.04);
+  --glass-border: rgba(255, 255, 255, 0.08);
+
+  /* AA-safe button-background blues (see file header); not source values. */
+  --accent-solid: #0060f0;
+  --danger-solid: #c0392b;
+  --danger-solid-hover: #a53124;
+
+  /* ---- Semantic tokens the rest of this app's CSS is written against ---- */
+  --bg: var(--black);
+  --surface: var(--card-bg);
+  --surface-sunken: var(--navy);
+  --surface-hover: color-mix(in srgb, var(--card-bg) 88%, white);
+  --border: var(--card-border);
+  --border-strong: rgba(0, 102, 255, 0.4);
+  --text: var(--white);
+  /* --muted stays the exact brand value: already AA-safe, see header. */
+
+  --accent: var(--electric-bright);
+  --accent-hover: var(--accent-solid);
+  --accent-bg: rgba(0, 102, 255, 0.15);
+  --on-accent: var(--white);
+
+  --success: #4cc38a;
+  --success-bg: rgba(76, 195, 138, 0.15);
+  --warning: #ffaa00;
+  --warning-bg: rgba(255, 170, 0, 0.15);
+  --danger: #f07167;
+  --danger-hover: var(--danger-solid-hover);
+  --danger-bg: rgba(192, 57, 43, 0.18);
+  --on-danger: var(--white);
+  --neutral-bg: var(--glass);
+
+  /* Approved status: the one place --lime is used. */
+  --approved: var(--lime);
+  --approved-bg: rgba(200, 255, 0, 0.1);
+  --on-approved: var(--black);
+
+  --focus-ring: 0 0 0 2px var(--surface), 0 0 0 4px var(--accent);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 1px 3px rgba(0, 0, 0, 0.4), 0 4px 12px rgba(0, 0, 0, 0.25);
+  --glow-sm: 0 0 20px rgba(0, 102, 255, 0.15);
+
+  /* Spacing scale: 4 / 8 / 12 / 16 / 24 / 32. */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+
+  --radius: 6px;
+  --radius-lg: 12px;
+
+  --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-heading: var(--font-jakarta), var(--font-sans);
+  --font-mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, "Liberation Mono", monospace;
+
+  --fs-xs: 12px;
+  --fs-sm: 13px;
+  --fs-base: 14px;
+  --fs-md: 15px;
+  --fs-lg: 17px;
+  --fs-xl: 22px;
+  --fs-hero: 40px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: var(--fs-base);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  color: var(--text);
+  font-family: var(--font-heading);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+h1,
+.page-title {
+  font-size: var(--fs-xl);
+  font-weight: 700;
+}
+
+h2,
+.section-title {
+  font-size: var(--fs-md);
+  font-weight: 700;
+}
+
+h3 {
+  font-size: var(--fs-base);
+  font-weight: 600;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+  border-radius: var(--radius);
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.small {
+  font-size: var(--fs-sm);
+}
+
+.xsmall {
+  font-size: var(--fs-xs);
+}
+
+/* Scrollbar (WebKit/Blink; Firefox falls back to its own default, still readable on dark). */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--navy);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--electric);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--electric-bright);
+}

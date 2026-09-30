@@ -1,0 +1,37 @@
+{
+  "name": "clearpath-proposal-generator",
+  "version": "0.1.0",
+  "private": true,
+  "description": "ClearPath IT internal compliance findings/proposal generator",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint ."
+  },
+  "type": "module",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.129.0",
+    "@supabase/ssr": "^0.12.7",
+    "@supabase/supabase-js": "^2.117.2",
+    "next": "^16.3.7",
+    "pdfkit": "^0.20.2",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "resend": "^6.31.0",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/node": "^26.6.3",
+    "@types/pdfkit": "^0.17.6",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^16.3.7",
+    "playwright": "^1.63.0",
+    "postcss": "^8.5.28",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^5.9.3"
+  }
+}

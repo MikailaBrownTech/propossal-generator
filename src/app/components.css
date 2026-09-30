@@ -1,0 +1,452 @@
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 var(--space-3);
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  font: inherit;
+  font-size: var(--fs-sm);
+  font-weight: 550;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.12s, border-color 0.12s, color 0.12s;
+}
+
+.btn:hover {
+  text-decoration: none;
+}
+
+.btn:focus-visible {
+  box-shadow: var(--focus-ring);
+}
+
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.btn.primary {
+  background: var(--accent-solid);
+  color: var(--on-accent);
+  transition: background-color 0.12s, transform 0.12s, box-shadow 0.12s;
+}
+
+/* Same background on hover (brightening it drops white-text contrast under AA); lift + glow instead. */
+.btn.primary:hover:not(:disabled) {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(0, 102, 255, 0.4);
+}
+
+.btn.secondary {
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.2);
+  color: var(--text);
+  transition: border-color 0.12s, color 0.12s, box-shadow 0.12s;
+}
+
+.btn.secondary:hover:not(:disabled) {
+  border-color: var(--electric);
+  color: var(--accent);
+  box-shadow: var(--glow-sm);
+}
+
+.btn.ghost {
+  background: transparent;
+  color: var(--muted);
+}
+
+.btn.ghost:hover:not(:disabled) {
+  background: var(--surface-hover);
+  color: var(--text);
+}
+
+.btn.danger {
+  background: var(--danger-solid);
+  color: var(--on-danger);
+  transition: background-color 0.12s, transform 0.12s, box-shadow 0.12s;
+}
+
+.btn.danger:hover:not(:disabled) {
+  background: var(--danger-solid-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(192, 57, 43, 0.4);
+}
+
+.btn.sm {
+  height: 26px;
+  padding: 0 var(--space-2);
+  font-size: var(--fs-xs);
+}
+
+.btn.block {
+  width: 100%;
+}
+
+/* ---------- Layout helpers ---------- */
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.stack-sm {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.row.between {
+  justify-content: space-between;
+}
+
+/* ---------- Inputs ---------- */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.field-label {
+  font-size: var(--fs-sm);
+  font-weight: 550;
+  color: var(--text);
+}
+
+.field-hint {
+  font-size: var(--fs-xs);
+  color: var(--muted);
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="password"],
+input:not([type]),
+select,
+textarea {
+  width: 100%;
+  min-width: 0;
+  padding: 7px 10px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-size: var(--fs-base);
+  line-height: 1.45;
+  transition: border-color 0.12s;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--muted);
+  opacity: 1;
+}
+
+input:hover,
+select:hover,
+textarea:hover {
+  border-color: var(--muted);
+}
+
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-bg);
+  border-radius: var(--radius);
+}
+
+select {
+  height: 32px;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.check {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  font-size: var(--fs-base);
+  cursor: pointer;
+}
+
+.check input {
+  margin: 3px 0 0;
+  accent-color: var(--accent);
+  width: 15px;
+  height: 15px;
+  flex: none;
+}
+
+/* ---------- Badges (status/severity pills) ---------- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 20px;
+  padding: 0 9px;
+  border-radius: 999px;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  white-space: nowrap;
+  background: var(--neutral-bg);
+  color: var(--muted);
+  border: 1px solid var(--glass-border);
+}
+
+.badge.info {
+  background: var(--accent-bg);
+  border-color: rgba(0, 102, 255, 0.3);
+  color: var(--accent);
+}
+
+.badge.success {
+  background: var(--success-bg);
+  border-color: rgba(76, 195, 138, 0.3);
+  color: var(--success);
+}
+
+.badge.warning {
+  background: var(--warning-bg);
+  border-color: rgba(255, 170, 0, 0.3);
+  color: var(--warning);
+}
+
+.badge.danger {
+  background: var(--danger-bg);
+  border-color: rgba(192, 57, 43, 0.35);
+  color: var(--danger);
+}
+
+/* The one place --lime appears: Approved status, and nothing else. */
+.badge.approved {
+  background: var(--approved-bg);
+  border-color: rgba(200, 255, 0, 0.3);
+  color: var(--approved);
+}
+
+.badge.outline {
+  background: transparent;
+  border-color: var(--border-strong);
+}
+
+/*
+ * Finding/vulnerability severity. Four distinguishable tones reusing the existing badge palette
+ * rather than inventing new colors: critical = danger (red), high = warning (amber), medium = info
+ * (blue -- a real concern, not urgent), low = outline (neutral/muted). The word is always present
+ * too, never color alone.
+ */
+.badge.severity-critical {
+  background: var(--danger-bg);
+  border-color: rgba(192, 57, 43, 0.35);
+  color: var(--danger);
+}
+
+.badge.severity-high {
+  background: var(--warning-bg);
+  border-color: rgba(255, 170, 0, 0.3);
+  color: var(--warning);
+}
+
+.badge.severity-medium {
+  background: var(--accent-bg);
+  border-color: rgba(0, 102, 255, 0.3);
+  color: var(--accent);
+}
+
+.badge.severity-low {
+  background: transparent;
+  border-color: var(--border-strong);
+  color: var(--muted);
+}
+
+/* ---------- Cards ---------- */
+/*
+ * Cards default to the brand's "dark" card (solid, bordered): a page full of source documents or
+ * findings is where a blurred glass backdrop gets expensive and hard to read, so that's reserved for
+ * one hero element per page instead (.card-glass below).
+ */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-4);
+  min-width: 0;
+  transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
+}
+
+/* A card that's also a link (e.g. a client row) gets a hover affordance. */
+a.card:hover {
+  border-color: var(--border-strong);
+  background: var(--surface-hover);
+}
+
+.strong {
+  font-weight: 600;
+  color: var(--text);
+}
+
+/* Clickable text that isn't an <a> (e.g. a <summary> toggle) but should
+ * read like one. */
+.text-link {
+  color: var(--accent);
+  font-weight: 550;
+  cursor: pointer;
+}
+
+.text-link:hover {
+  text-decoration: underline;
+}
+
+/* Reserved for one hero element per page (report status/score, or a proposal's plan price). Not
+ * used on dense lists of findings, contacts, or source documents. */
+.card-glass {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  backdrop-filter: blur(12px);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 32px rgba(0, 102, 255, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.card-glass::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0, 102, 255, 0.5), transparent);
+}
+
+.card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-3);
+}
+
+.card-head .sub {
+  font-size: var(--fs-sm);
+  color: var(--muted);
+}
+
+/* Large gradient number (brand's .stat-num): white to cyan, text-clipped. Used once per page, inside
+ * .card-glass -- a finding/severity count, or a plan's price. */
+.stat-num {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: var(--fs-hero);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, var(--white), var(--cyan));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* ---------- Evidence (monospace quote from a source document) ---------- */
+.evidence {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 2px var(--space-2);
+  margin-top: 3px;
+  font-size: var(--fs-xs);
+  color: var(--muted);
+}
+
+.quote {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--text);
+  background: var(--surface-sunken);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1px 6px;
+  overflow-wrap: anywhere;
+}
+
+/* ---------- Banners ---------- */
+.banner {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  padding: 10px var(--space-3);
+  border-radius: var(--radius);
+  border: 1px solid transparent;
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+}
+
+.banner.error {
+  background: var(--danger-bg);
+  border-color: color-mix(in srgb, var(--danger) 30%, transparent);
+  color: var(--danger);
+}
+
+.banner.warning {
+  background: var(--warning-bg);
+  border-color: color-mix(in srgb, var(--warning) 30%, transparent);
+  color: var(--warning);
+}
+
+.banner.info {
+  background: var(--accent-bg);
+  border-color: color-mix(in srgb, var(--accent) 25%, transparent);
+  color: var(--accent);
+}
+
+.banner.success {
+  background: var(--success-bg);
+  border-color: color-mix(in srgb, var(--success) 30%, transparent);
+  color: var(--success);
+}
+
+/* ---------- Empty states ---------- */
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-6) var(--space-4);
+  text-align: center;
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+}
+
+.empty p {
+  max-width: 420px;
+  color: var(--muted);
+  font-size: var(--fs-sm);
+}
