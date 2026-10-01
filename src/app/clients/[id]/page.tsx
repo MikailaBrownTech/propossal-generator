@@ -6,6 +6,7 @@ import { addContact, addSourceDocument, runExtraction } from "./actions";
 import { updateClientRecord } from "@/app/clients/actions";
 import type { RedactionEntry } from "@/lib/redaction/redact";
 import { PROFILE_FIELDS, PROFILE_FIELD_LABELS } from "@/lib/extraction/fields";
+import { SubmitButton } from "@/components/SubmitButton";
 
 const SOURCE_TYPE_LABELS: Record<string, string> = {
   meeting_notes: "Meeting Notes",
@@ -253,9 +254,9 @@ export default async function ClientDetailPage({
                     <div className="row">
                       <span className="xsmall muted">{new Date(doc.created_at).toLocaleString()}</span>
                       <form action={runExtraction.bind(null, id, doc.id)}>
-                        <button type="submit" className="btn secondary sm">
+                        <SubmitButton pendingText="Extracting..." className="btn secondary sm">
                           Run extraction
-                        </button>
+                        </SubmitButton>
                       </form>
                     </div>
                   </div>

@@ -8,6 +8,7 @@ import {
   approveProposal,
   revertToDraft,
 } from "./actions";
+import { SubmitButton } from "@/components/SubmitButton";
 
 interface ProposalNarrative {
   what_we_heard: string;
@@ -86,9 +87,9 @@ export default async function ProposalPage({
                   ))}
                 </select>
               </div>
-              <button type="submit" className="btn primary">
+              <SubmitButton pendingText="Generating proposal..." className="btn primary">
                 Generate proposal
-              </button>
+              </SubmitButton>
             </form>
           )}
         </div>
@@ -164,9 +165,9 @@ export default async function ProposalPage({
               ))}
             </select>
           </div>
-          <button type="submit" className="btn secondary">
+          <SubmitButton pendingText="Regenerating..." className="btn secondary">
             Regenerate (discards edits)
-          </button>
+          </SubmitButton>
         </form>
 
         {isLocked ? (

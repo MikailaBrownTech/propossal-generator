@@ -8,6 +8,7 @@ import {
   approveReport,
   revertToDraft,
 } from "./actions";
+import { SubmitButton } from "@/components/SubmitButton";
 
 interface FindingTranslation {
   finding_id: string;
@@ -82,9 +83,9 @@ export default async function FindingsReportPage({
           </p>
           {findings && findings.length > 0 && (
             <form action={generateAction} className="mt-4">
-              <button type="submit" className="btn primary">
+              <SubmitButton pendingText="Generating report..." className="btn primary">
                 Generate findings report
-              </button>
+              </SubmitButton>
             </form>
           )}
         </div>
@@ -143,9 +144,9 @@ export default async function FindingsReportPage({
             Export PDF{report.status !== "approved" ? " (draft watermark)" : ""}
           </a>
           <form action={generateAction}>
-            <button type="submit" className="btn secondary">
+            <SubmitButton pendingText="Regenerating..." className="btn secondary">
               Regenerate (discards edits)
-            </button>
+            </SubmitButton>
           </form>
           {isLocked && (
             <form action={revertAction}>

@@ -90,6 +90,32 @@
   width: 100%;
 }
 
+/* Inline spinner for a pending Server Action (see SubmitButton). Sized to
+ * sit on the button's current text baseline regardless of button size. */
+.spinner {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  flex: none;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  opacity: 0.8;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation-duration: 1.5s;
+  }
+}
+
 /* ---------- Layout helpers ---------- */
 .stack {
   display: flex;
