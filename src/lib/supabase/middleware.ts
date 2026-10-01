@@ -1,7 +1,17 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
-const PUBLIC_ROUTES = ["/login", "/signup"];
+// No auth required; an already-logged-in user gets bounced to "/" instead
+// (seeing the login/signup/forgot-password form while signed in is pointless).
+const PUBLIC_ROUTES = ["/login", "/signup", "/forgot-password"];
+
+// Always let these through regardless of auth state, and never redirect
+// away from them. /auth/confirm processes a one-time recovery link and may
+// need to run whether or not the browser already happens to have an
+// unrelated session cookie -- redirecting it to "/" before the route
+// handler runs would silently break the password-reset flow for anyone
+// who clicks the email link while already signed in elsewhere.
+const BYPASS_ROUTES = ["/auth/confirm"];
 
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request });
@@ -24,6 +34,10 @@ export async function updateSession(request: NextRequest) {
       },
     },
   );
+
+  if (BYPASS_ROUTES.some((route) => request.nextUrl.pathname.startsWith(route))) {
+    return supabaseResponse;
+  }
 
   // Always re-validate against Supabase (not just reading the cookie) so an
   // expired/revoked session is caught on every request.

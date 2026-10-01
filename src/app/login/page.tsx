@@ -25,9 +25,14 @@ export default async function LoginPage({
             <input id="email" name="email" type="email" required autoComplete="email" />
           </div>
           <div className="field">
-            <label htmlFor="password" className="field-label">
-              Password
-            </label>
+            <div className="row between">
+              <label htmlFor="password" className="field-label">
+                Password
+              </label>
+              <Link href="/forgot-password" className="xsmall">
+                Forgot password?
+              </Link>
+            </div>
             <input
               id="password"
               name="password"
