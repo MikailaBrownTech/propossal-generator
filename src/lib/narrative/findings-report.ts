@@ -35,7 +35,20 @@ export interface FindingsReportOutcome {
   }[];
 }
 
-async function callModel(userMessage: string): Promise<FindingsReportResult> {
+// Non-streaming requests should stay comfortably under the SDK's HTTP
+// timeout, so we cap well below the model's 128K ceiling (which requires
+// streaming). Within that cap, size the budget to the actual job: one full
+// 4-field translation per finding, plus a fixed allowance for the executive
+// summary and up to 3 top priorities.
+const NON_STREAMING_MAX_TOKENS_CAP = 16000;
+const TOKENS_PER_FINDING = 500;
+const FIXED_OUTPUT_TOKENS = 1500;
+
+function computeMaxTokens(findingCount: number): number {
+  return Math.min(NON_STREAMING_MAX_TOKENS_CAP, FIXED_OUTPUT_TOKENS + findingCount * TOKENS_PER_FINDING);
+}
+
+async function callModel(userMessage: string, findingCount: number): Promise<FindingsReportResult> {
   const model = process.env.ANTHROPIC_MODEL_NARRATIVE;
   if (!model) {
     throw new FindingsReportError("ANTHROPIC_MODEL_NARRATIVE is not configured");
@@ -45,7 +58,7 @@ async function callModel(userMessage: string): Promise<FindingsReportResult> {
 
   const response = await client.messages.create({
     model,
-    max_tokens: 4096,
+    max_tokens: computeMaxTokens(findingCount),
     system: [
       {
         type: "text",
@@ -123,13 +136,13 @@ export async function generateFindingsReport(
 
   let result: FindingsReportResult;
   try {
-    result = await callModel(userMessage);
+    result = await callModel(userMessage, findings.length);
     validateIndexCoverage(result, findings.length);
   } catch (firstError) {
     // Single retry on a guardrail/validation failure -- re-sends the same
     // prompt rather than looping. If it fails again, fail closed.
     try {
-      result = await callModel(userMessage);
+      result = await callModel(userMessage, findings.length);
       validateIndexCoverage(result, findings.length);
     } catch {
       throw firstError;
